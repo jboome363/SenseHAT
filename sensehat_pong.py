@@ -11,21 +11,17 @@ ball_velocity = [1, 1]
 def draw_ball():
     sense.set_pixel(ball_position[0], ball_position[1], blue)
     ball_position[0] += ball_velocity[0]
-    if ball_position[0] == 7:
+    if ball_position[0] == 7 or ball_position[0] == 0:
         ball_velocity[0] = -ball_velocity [0]
-    if ball_position[0] == 1 and ball_position[0] == bat_y:
+    if ball_position[1] == 7 or ball_position[1] == 0:
+        ball_velocity[1] = -ball_velocity [1]
+    ball_position[1] += ball_velocity[1]
+    if ball_position[0] == 1 and (bat_y - 1) <= ball_position[1] <= (bat_y +1):
         ball_velocity[0] = -ball_velocity[0]
-    if ball_position[0] == 0:
-        sense.clear()
-        sense.clear(255, 0, 0)
-        time.sleep(9)
-    time.sleep(0.05)
 def draw_bat():
-    sense.clear()
     sense.set_pixel(0, bat_y, white)
     sense.set_pixel(0, bat_y - 1, white)
     sense.set_pixel(0, bat_y + 1, white)
-    time.sleep(0.25)
 def move_up(event):
     global bat_y
     if bat_y >= 2:
@@ -43,7 +39,9 @@ sense.stick.direction_down = move_down
 if ball_position[0] == 0:
     ball_velocity[0] = -ball_velocity[0]
 while True:
-    draw_bat()
     draw_ball()
+    draw_bat()
+    time.sleep(0.25)
     sense.clear()
+
 
