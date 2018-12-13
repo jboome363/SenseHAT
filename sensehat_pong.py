@@ -1,14 +1,33 @@
 from sense_hat import SenseHat
 import time
+import random
+bat_y = 4
+speed = 0.16
+score = 0
+ball_position = [random.randint(0,7), 3]
+print(ball_position[0])
+ball_velocity = [1, 1]
+def setup_game():
+    global bat_y
+    global speed
+    global score
+    global ball_position
+    global ball_velocity
+    bat_y = 4
+    speed = 0.16
+    score = 0
+    ball_position = [random.randint(0,7), 3]
+    ball_velocity = [1, random.choice([-1, 1])]
+    print("Starting Pong...")
+setup_game()
 sense = SenseHat()
-print("Starting Pong...")
 white = (255, 255, 255)
 blue = (0, 0, 255)
-bat_y = 4
-ball_position = [3, 3]
-ball_velocity = [1, 1]
+#speed closer to 0 is faster
 #_____Functions_____
 def draw_ball():
+    global score
+    global speed
     sense.set_pixel(ball_position[0], ball_position[1], blue)
     ball_position[0] += ball_velocity[0]
     if ball_position[0] == 7 or ball_position[0] == 0:
@@ -18,10 +37,20 @@ def draw_ball():
     ball_position[1] += ball_velocity[1]
     if ball_position[0] == 1 and (bat_y - 1) <= ball_position[1] <= (bat_y +1):
         ball_velocity[0] = -ball_velocity[0]
+        score += 1
+        speed -= 0.002
+    if ball_position[0] == 0:
+        sense.show_message("You Lose")
+        sense.show_message("SCORE = " + str(score))
+        sense.clear()
+        time.sleep(2)
+        setup_game()
 def draw_bat():
+    global speed
     sense.set_pixel(0, bat_y, white)
     sense.set_pixel(0, bat_y - 1, white)
     sense.set_pixel(0, bat_y + 1, white)
+    time.sleep(speed)
 def move_up(event):
     global bat_y
     if bat_y >= 2:
@@ -41,7 +70,4 @@ if ball_position[0] == 0:
 while True:
     draw_ball()
     draw_bat()
-    time.sleep(0.25)
     sense.clear()
-
-
