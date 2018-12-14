@@ -4,9 +4,9 @@ import random
 sense = SenseHat()
 sense.clear() 
 bat_y = 4
-speed = 0.16
-speed2 = 0.16
-score = 29
+speed = 0.20
+speed2 = 0.20
+score = 0
 ball_position = [random.randint(1,5), 2]
 ball2_position = [1, 2]
 print(ball_position)
@@ -20,8 +20,8 @@ def setup_game():
     global ball_position
     global ball_velocity
     bat_y = 4
-    speed = 0.16
-    score = 29
+    speed = 0.20
+    score = 0
     ball_position = [random.randint(1,5), random.randint(1,5)]
     ball_velocity = [1, random.choice([-1, 1])]
     print("Starting Pong...")
