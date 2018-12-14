@@ -1,9 +1,7 @@
 from sense_hat import SenseHat
 import time
 import random
-sense = SenseH
-
-at()
+sense = SenseHat()
 sense.clear() 
 bat_y = 4
 speed = 0.16
