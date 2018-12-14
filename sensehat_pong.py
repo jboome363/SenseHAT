@@ -1,11 +1,15 @@
 from sense_hat import SenseHat
 import time
 import random
+sense = SenseH
+
+at()
+sense.clear() 
 bat_y = 4
 speed = 0.16
 score = 0
-ball_position = [random.randint(0,7), 3]
-print(ball_position[0])
+ball_position = [random.randint(0,7), ]
+print(ball_position)
 ball_velocity = [1, 1]
 def setup_game():
     global bat_y
@@ -16,11 +20,10 @@ def setup_game():
     bat_y = 4
     speed = 0.16
     score = 0
-    ball_position = [random.randint(0,7), 3]
+    ball_position = [random.randint(0,7), 6]
     ball_velocity = [1, random.choice([-1, 1])]
     print("Starting Pong...")
 setup_game()
-sense = SenseHat()
 white = (255, 255, 255)
 blue = (0, 0, 255)
 #speed closer to 0 is faster
@@ -40,6 +43,7 @@ def draw_ball():
         score += 1
         speed -= 0.002
     if ball_position[0] == 0:
+        print("SCORE = " + str(score))
         sense.show_message("You Lose")
         sense.show_message("SCORE = " + str(score))
         sense.clear()
