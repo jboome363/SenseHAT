@@ -10,9 +10,6 @@ score = 0
 ball_position = [1, 1]
 ball2_position = [1, 4]
 ball3_position = [1, 3]
-print(ball_position)
-print(ball2_position)
-print(ball3_position)
 ball_velocity = [1, 1]
 ball2_velocity = [ball_velocity[0], ball_velocity[1]]
 ball3_velocity = [ball_velocity[0], ball_velocity[1]]
@@ -62,6 +59,8 @@ def level_three():
     ball2_velocity = [1, 1]
     ball3_velocity
     print("LEVEL 3")
+def level_four():
+    print("this is just a placeholder so i know that level 4 is finished")
 setup_game()
 white = (255, 255, 255)
 blue = (0, 0, 255)
