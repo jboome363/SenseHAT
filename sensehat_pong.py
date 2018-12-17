@@ -7,12 +7,15 @@ bat_y = 4
 speed = 0.25
 speed2 = 0.25
 score = 0
-ball_position = [random.randint(1,5), 2]
-ball2_position = [1, 2]
+ball_position = [1, 1]
+ball2_position = [1, 4]
+ball3_position = [1, 3]
 print(ball_position)
 print(ball2_position)
+print(ball3_position)
 ball_velocity = [1, 1]
-ball2_velocity = [1, 1]
+ball2_velocity = [ball_velocity[0], ball_velocity[1]]
+ball3_velocity = [ball_velocity[0], ball_velocity[1]]
 def setup_game():
     global bat_y
     global speed
@@ -22,19 +25,61 @@ def setup_game():
     bat_y = 4
     speed = 0.25
     score = 0
-    ball_position = [random.randint(1,5), random.randint(1,5)]
-    ball_velocity = [1, random.choice([-1, 1])]
+    ball_position = [1, 2]
+    ball_velocity = [1, 1]
     print("Starting Pong...")
+def level_two():
+    global bat_y
+    global speed
+    global score
+    global ball_position
+    global ball2_position
+    global ball_velocity
+    global ball2_velocity
+    bat_y = 4
+    speed = 0.19
+    ball_position = [1, 2]
+    ball2_position = [1, 4]
+    ball_velocity = [1, 1]
+    ball2_velocity = [1, 1]
+    print("LEVEL 2")
+def level_three():
+    global bat_y
+    global speed
+    global score
+    global ball_position
+    global ball2_position
+    global ball3_position
+    global ball_velocity
+    global ball2_velocity
+    global ball3_velocity
+    bat_y = 4
+    speed = 0.17
+    ball_position = [1, 2]
+    ball2_position = [1, 4]
+    ball3_position = [1, 3]
+    ball_velocity = [1, 1]
+    ball2_velocity = [1, 1]
+    ball3_velocity
+    print("LEVEL 3")
 setup_game()
 white = (255, 255, 255)
 blue = (0, 0, 255)
 green = (0, 255, 0)
+red = (255, 0 ,0)
 #speed closer to 0 is faster
 #_____Functions_____
 def reset_game():
     print("Resetting...")
     time.sleep(1)
     setup_game()
+def redraw_1():
+    global ball_position
+    global speed
+    global ball_velocity
+    ball_position = [1, 2]
+    ball_velocity = [1, 1]
+    speed = 0.05
 def draw_ball():
     global score
     global speed
@@ -48,7 +93,8 @@ def draw_ball():
     if ball_position[0] == 1 and (bat_y - 1) <= ball_position[1] <= (bat_y +1):
         ball_velocity[0] = -ball_velocity[0]
         score += 1
-        speed -= 0.001
+        if speed > 0.001:
+            speed -= 0.001
     if ball_position[0] == 0:
         print("SCORE = " + str(score))
         sense.show_message("You Lose")
@@ -69,6 +115,25 @@ def draw_ball2():
     if ball2_position[0] == 1 and (bat_y - 1) <= ball2_position[1] <= (bat_y +1):
         ball2_velocity[0] = -ball2_velocity[0]
     if ball2_position[0] == 0:
+        print("SCORE = " + str(score))
+        sense.show_message("You Lose")
+        sense.show_message("SCORE = " + str(score))
+        sense.clear()
+        time.sleep(2)
+        setup_game()
+def draw_ball3():
+    global score
+    global speed
+    sense.set_pixel(ball3_position[0], ball3_position[1], red)
+    ball3_position[0] += ball3_velocity[0]
+    if ball3_position[0] == 7 or ball3_position[0] == 0:
+        ball3_velocity[0] = -ball3_velocity [0]
+    if ball3_position[1] == 7 or ball3_position[1] == 0:
+        ball3_velocity[1] = -ball3_velocity [1]
+    ball3_position[1] += ball3_velocity[1]
+    if ball3_position[0] == 1 and (bat_y - 1) <= ball3_position[1] <= (bat_y +1):
+        ball3_velocity[0] = -ball3_velocity[0]
+    if ball3_position[0] == 0:
         print("SCORE = " + str(score))
         sense.show_message("You Lose")
         sense.show_message("SCORE = " + str(score))
@@ -99,7 +164,21 @@ if ball_position[0] == 0:
     ball_velocity[0] = -ball_velocity[0]
 while True:
     draw_ball()
-    if score >= 30:
-        draw_ball2()
+    if score >= 30 and score < 70:
+        if score == 30:
+            level_two()
+            score += 1
+        else:
+            draw_ball2()
+    if score >= 50 and score < 70:
+        if score == 50:
+            level_three()
+            score += 1
+        else:
+            draw_ball3()
+    if score >= 70:
+        if score == 70:
+            score += 1
+            redraw_1()
     draw_bat()
     sense.clear()
